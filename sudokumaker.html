@@ -1,6 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      function makeTheGrid(){
+        $("body").append("<div class="thegrid"><p>text</p></div>")
+      };
+      makeTheGrid();
+    });
+  </script>
+  <style type="text/css">
+    :root{
+      --cellSize: 64px;
+    }
+    div.thegrid{
+      height: var(--cellSize);
+      width: var(--cellSize);
+      border: 1px solid black;
+    }
+  </style>
 </head>
 <body>
 </body>
