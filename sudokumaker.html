@@ -1,22 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function(){
-      document.write("hello world!");
-    });
-  </script>
-  <style type="text/css">
-    :root{
-      --cellSize: 64px;
-    }
-    div.thegrid{
-      height: var(--cellSize);
-      width: var(--cellSize);
-      border: 1px solid black;
-    }
-  </style>
+	<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript">
+
+		function shuffleArray(array){
+			var currentIndex=array.length, temporaryValue, randomIndex;
+			while (0 !== currentIndex) {
+				randomIndex = Math.floor(Math.random()*currentIndex);
+				currentIndex -= 1;
+				temporaryValue = array[currentIndex];
+				array[currentIndex] = array[randomIndex];
+				array[randomIndex] = temporaryValue;
+			}
+			return array;
+		};
+		
+		function generateSudokuGrid(gridSize){
+			var characterPool = new Array("1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z");
+			var shuffledcharacters, shuffledcharacterstring, shuffledcharactergrid=[];
+			if (gridSize>characterPool.length){gridSize=9};
+			characters = characterPool.slice(0,gridSize);
+			for (i=0;i<gridSize;i++){
+				shuffledcharacters = shuffleArray(characters);
+				shuffledcharacterstring= shuffledcharacters.concat(shuffledcharacterstring).join("");
+			}
+			for (i=0;i<gridSize;i++){
+				shuffledcharactergrid.push(shuffledcharacterstring.substring(i,i+gridSize));
+			}
+			return shuffledcharactergrid;
+		};
+
+		var sudokuGrid = generateSudokuGrid(16).toString().split(",").join("<br \>")
+		document.write(sudokuGrid);
+
+	</script>
+	<style type="text/css">
+		body {
+			font-family: lucida sans typewriter;
+		}
+	</style>
 </head>
 <body>
 </body>
