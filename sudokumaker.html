@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<style type="text/css">
+		body {
+			font-family: Lucida Sans Typewriter;
+			letter-spacing: 0.6em;
+			font-size: 150%;
+		}
+	</style>
 	<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript">
 
@@ -16,31 +23,51 @@
 			return array;
 		};
 		
-		function generateSudokuGrid(gridSize){
-			var characterPool = new Array("1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z");
-			var shuffledcharacters, shuffledcharacterstring, shuffledcharactergrid=[];
-			if (gridSize>characterPool.length){gridSize=9};
-			characters = characterPool.slice(0,gridSize);
-			for (i=0;i<gridSize;i++){
-				shuffledcharacters = shuffleArray(characters);
-				shuffledcharacterstring= shuffledcharacters.concat(shuffledcharacterstring).join("");
+		function generateSudokuGrid(sudokuSize){
+			var potentialCharacterPool = new Array("1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z");
+			if ( sudokuSize>potentialCharacterPool.length ){ sudokuSize=9 };
+			var sudokuCharacterSet = potentialCharacterPool.slice(0,sudokuSize);
+			var forLoopNumber = sudokuCharacterSet.length;
+			var unshuffledSudokuArray = [];
+			var shuffledSudokuArray = [];
+			var shuffledSudokuString = "";
+			
+			// generate an array with the full set of sudoku characters
+			for (i=0;i<forLoopNumber;i++){
+				unshuffledSudokuArray[i] = sudokuCharacterSet;
 			}
-			for (i=0;i<gridSize;i++){
-				shuffledcharactergrid.push(shuffledcharacterstring.substring(i,i+gridSize));
+			
+			// randomize the characters into a valid sudoku grid
+			for (i=0;i<forLoopNumber;i++){
+				shuffledSudokuArray[i] = shuffleArray(unshuffledSudokuArray[i]);
+				shuffledSudokuArray[i] = shuffledSudokuArray[i]+("<br />") // this helps break up the output into a grid by inserting linebreaks where appropriate
 			}
-			return shuffledcharactergrid;
+			
+			for (i=0;i<forLoopNumber;i++){
+				shuffledSudokuString = shuffledSudokuString+shuffledSudokuArray[i]
+			}
+			
+			return shuffledSudokuString;
 		};
 
-		var sudokuGrid = generateSudokuGrid(16).toString().split(",").join("<br \>")
-		document.write(sudokuGrid);
+		var sudokuGrid = generateSudokuGrid(16).toString().split(",").join(""); // turns the completed array into a string for output.
+	
+	$(document).ready(function(){
+		$('.CompleteSudokuGrid').html(sudokuGrid); // outputs the completed grid to whatever element has the CompleteSudokuGrid class
+	});
+/*		
 
+
+Build two arrays.  One blank One non-randomized with all the characters we're going to use.
+Call them unshuffledSudokuArray and shuffledSudokuArray
+Make a set of arrays equal to the grid size.
+Each array would have the number of characters based on the grid size.
+Insert the first array of shuffled characters.
+Insert each array 
+*/
 	</script>
-	<style type="text/css">
-		body {
-			font-family: lucida sans typewriter;
-		}
-	</style>
 </head>
 <body>
+<div class="CompleteSudokuGrid"></div>
 </body>
 </html>
